@@ -35,20 +35,6 @@ Cada clase introduce nuevos componentes y conceptos de programación.
 
 ---
 
-## 📂 Estructura del repositorio
-
-Proyecto-Arduino/
-├── Clase1_Semaforo/
-│ └── Semaforo.ino
-├── Clase2_MantenLaZona/
-│ └── MantenLaZona.ino
-├── Clase3_UltrasonicoServo/
-│ └── UltrasonicoServo.ino
-└── README.md
-
-
----
-
 ## 🛠️ Materiales generales
 - Arduino UNO (o compatible)
 - Protoboard y cables
