@@ -5,9 +5,10 @@ Cada clase introduce nuevos componentes y conceptos de programación.
 
 ---
 
-### Clase 1: Semáforo con LEDs
+### Clase 1: Semáforo con LEDs y servomotor
 - Simulación de un semáforo básico con 3 LEDs (rojo, amarillo y verde).
 - Uso de `digitalWrite()` y `delay()` para controlar las luces.
+- Se ingresa el ángulo al monitor serial y el servomotor se mueve según el ángulo y prende un led según el ángulo (0-180)
 - Objetivo: comprender salidas digitales y secuencias.
 
 ---
