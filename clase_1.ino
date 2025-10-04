@@ -1,43 +1,58 @@
-const int LED_ROJO     = 2;
-const int LED_AMARILLO = 3;
-const int LED_VERDE    = 4;
+#include <Servo.h>
 
-const unsigned long T_VERDE    = 5000;  // 5 segundos
-const unsigned long T_AMARILLO = 1500;  // 1.5 segundos
-const unsigned long T_ROJO     = 5000;  // 5 segundos
+Servo miServo;
+
+const int ledAzul = 2;
+const int ledAmarillo = 3;
+const int ledRojo = 4;
+const int pinServo = 9;
 
 void setup() {
-  pinMode(LED_ROJO, OUTPUT);
-  pinMode(LED_AMARILLO, OUTPUT);
-  pinMode(LED_VERDE, OUTPUT);
-}
+  miServo.attach(pinServo);
 
-void apagarTodo() {
-  digitalWrite(LED_ROJO, LOW);
-  digitalWrite(LED_AMARILLO, LOW);
-  digitalWrite(LED_VERDE, LOW);
-}
+  pinMode(ledAzul, OUTPUT);
+  pinMode(ledAmarillo, OUTPUT);
+  pinMode(ledRojo, OUTPUT);
 
-void faseVerde() {
-  apagarTodo();
-  digitalWrite(LED_VERDE, HIGH);
-  delay(T_VERDE);
-}
+  Serial.begin(9600);
+  apagarTodosLosLEDs();
 
-void faseAmarillo() {
-  apagarTodo();
-  digitalWrite(LED_AMARILLO, HIGH);
-  delay(T_AMARILLO);
-}
-
-void faseRojo() {
-  apagarTodo();
-  digitalWrite(LED_ROJO, HIGH);
-  delay(T_ROJO);
+  Serial.println("Introduce un ángulo entre 0 y 180 grados.");
 }
 
 void loop() {
-  faseVerde();
-  faseAmarillo();
-  faseRojo();
+  if (Serial.available()) {
+    int angulo = Serial.parseInt();
+
+    if (angulo >= 0 && angulo <= 180) {
+      miServo.write(angulo);
+
+      if (angulo < 60) {
+        encenderLED(ledAzul);
+      } else if (angulo <= 120) {
+        encenderLED(ledAmarillo);
+      } else {
+        encenderLED(ledRojo);
+      }
+
+      Serial.print("Ángulo recibido: ");
+      Serial.println(angulo);
+    } else {
+      Serial.println("Ángulo inválido. Debe estar entre 0 y 180.");
+      while (Serial.available()) {
+        Serial.read();
+      }
+    }
+  }
+}
+
+void encenderLED(int led) {
+  apagarTodosLosLEDs();
+  digitalWrite(led, HIGH);
+}
+
+void apagarTodosLosLEDs() {
+  digitalWrite(ledAzul, LOW);
+  digitalWrite(ledAmarillo, LOW);
+  digitalWrite(ledRojo, LOW);
 }
